@@ -36,11 +36,13 @@
 					Current Location
 				</button>
 				<select
-					id="recentCityBtn"
-					class="border border-neutral-300 md:w-fit px-4 py-2 rounded-lg transition duration-300 hover:bg-indigo-500 hover:text-white">
+					id="previousCity"
+					class="border border-neutral-300 md:w-fit px-4 py-2 rounded-lg transition focus:outline-none duration-300 hover:bg-indigo-500 hover:text-white"
+					style="display: none">
 					<option
 						value="Select a city"
-						default>
+						disabled
+						selected>
 						Searched Cities
 					</option>
 				</select>

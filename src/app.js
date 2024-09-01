@@ -15,6 +15,9 @@ let todayWind = document.getElementById("todayWind");
 // 5 day forecast container
 let forecastContainer = document.getElementById("forecastContainer");
 
+// Previous searched city
+let previousSearchedCity = document.getElementById("previousCity");
+
 // Get city coordinate
 const getCityCoordinate = (e) => {
 	e.preventDefault();
@@ -34,6 +37,7 @@ const getCityCoordinate = (e) => {
 			let { lat, lon, name, state } = data[0];
 			getWeather(lat, lon, name, state);
 			getForecast(lat, lon);
+			saveCity(name); //Save city in localstorage
 		})
 		.catch(() => {
 			alert("City not found...");
@@ -139,8 +143,6 @@ const defaultCityWeather = () => {
 			alert("Failed to fetch weather for default city...");
 		});
 };
-// Call the function to load default city weather when the page loads
-window.addEventListener("load", defaultCityWeather);
 
 // Weather data for Current Location
 const currLocBtn = document.getElementById("currLocBtn");
@@ -164,3 +166,63 @@ const getCurrentLocWeather = (e) => {
 };
 
 currLocBtn.addEventListener("click", getCurrentLocWeather);
+
+// Save city in localstorage
+const saveCity = (city) => {
+	let previousSearches =
+		JSON.parse(localStorage.getItem("previousSearches")) || [];
+	if (!previousSearches.includes(city)) {
+		previousSearches.push(city);
+		localStorage.setItem("previousSearches", JSON.stringify(previousSearches));
+		loadPreviousSearches();
+	}
+};
+
+// Get previous searched city
+const loadPreviousSearches = () => {
+	let previousSearches =
+		JSON.parse(localStorage.getItem("previousSearches")) || [];
+
+	if (previousSearches.length > 0) {
+		previousSearchedCity.style.display = "block"; // Show the select element
+		previousSearchedCity.innerHTML =
+			'<option value="" disabled selected>Searched Cities</option>'; // Reset options
+		previousSearches.forEach((city) => {
+			let option = document.createElement("option");
+			option.value = city;
+			option.textContent = city;
+			previousSearchedCity.appendChild(option);
+		});
+	} else {
+		previousSearchedCity.style.display = "none"; // Hide the select element
+	}
+};
+
+// Event handler for city selection
+previousSearchedCity.addEventListener("change", (e) => {
+	let cityName = e.target.value;
+	if (cityName) {
+		getCityCoordinateFromSaved(cityName);
+	}
+});
+
+// Get city coordinate from saved searches
+const getCityCoordinateFromSaved = (cityName) => {
+	let geoCode = `http://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=1&appid=${apiKey}`;
+	fetch(geoCode)
+		.then((res) => res.json())
+		.then((data) => {
+			let { lat, lon, name, state } = data[0];
+			getWeather(lat, lon, name, state);
+			getForecast(lat, lon);
+		})
+		.catch(() => {
+			alert("Failed to fetch weather for saved city......");
+		});
+};
+
+// Call the function to load default city weather and previous searches when the page loads
+window.addEventListener("load", () => {
+	defaultCityWeather();
+	loadPreviousSearches();
+});
