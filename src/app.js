@@ -12,6 +12,9 @@ let todayWeather = document.getElementById("todayWeather");
 let todayHumidity = document.getElementById("todayHumidity");
 let todayWind = document.getElementById("todayWind");
 
+// 5 day forecast container
+let forecastContainer = document.getElementById("forecastContainer");
+
 // Get city coordinate
 const getCityCoordinate = (e) => {
 	e.preventDefault();
@@ -30,6 +33,7 @@ const getCityCoordinate = (e) => {
 		.then((data) => {
 			let { lat, lon, name, state } = data[0];
 			getWeather(lat, lon, name, state);
+			getForecast(lat, lon);
 		})
 		.catch(() => {
 			alert("City not found...");
@@ -73,6 +77,51 @@ const getWeather = (lat, lon, name, state) => {
 		});
 };
 
+// For a 5 day forecast
+const getForecast = (lat, lon) => {
+	let forecastApi = `http://api.openweathermap.org/data/2.5/forecast/?lat=${lat}&lon=${lon}&appid=${apiKey}`;
+	fetch(forecastApi)
+		.then((res) => res.json())
+		.then((data) => {
+			let nextForecastDays = [];
+			let forecastDays = data.list.filter((forecast) => {
+				let forecastDate = new Date(forecast.dt_txt).getDate();
+				if (!nextForecastDays.includes(forecastDate)) {
+					return nextForecastDays.push(forecastDate);
+				}
+			});
+			// console.log(forecastDays);
+			forecastContainer.innerHTML = ``;
+			for (i = 1; i < forecastDays.length; i++) {
+				let date = new Date(forecastDays[i].dt_txt);
+				forecastContainer.innerHTML += `
+                <div class="bg-indigo-50 p-4 rounded-lg text-center">
+					<p class="text-lg font-semibold text-gray-800">${date.toLocaleString("en-US", {
+						weekday: "long",
+					})}</p>
+					<img
+						src="https://openweathermap.org/img/wn/${
+							forecastDays[i].weather[0].icon
+						}@2x.png"
+						alt="Weather Icon"
+						class="size-12 mx-auto my-2" />
+					<p class="text-xl font-bold text-gray-800">${Math.round(
+						forecastDays[i].main.temp - 273.15
+					)}°C</p>
+					<p class="text-gray-600 font-semibold">${
+						forecastDays[i].weather[0].description
+					}</p>
+					<p class="text-sm text-gray-500">Wind: ${forecastDays[i].wind.speed} km/h</p>
+					<p class="text-sm text-gray-500">Humidity: ${forecastDays[i].main.humidity}%</p>
+				</div>
+            `;
+			}
+		})
+		.catch(() => {
+			alert("Failed to fetch forecast...");
+		});
+};
+
 searchBtn.addEventListener("click", getCityCoordinate);
 
 // Load a weather info on page load
@@ -84,6 +133,7 @@ const defaultCityWeather = () => {
 		.then((data) => {
 			let { lat, lon, name, state } = data[0];
 			getWeather(lat, lon, name, state);
+			getForecast(lat, lon);
 		})
 		.catch(() => {
 			alert("Failed to fetch weather for default city...");
