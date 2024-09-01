@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1.0" />
+		<title>Weather Forecast</title>
+		<link
+			href="./output.css"
+			rel="stylesheet" />
+	</head>
+	<body class="container w-full mx-auto bg-indigo-50">
+		<header
+			class="bg-gradient-to-tr from-indigo-400 to-indigo-700 text-xl md:text-3xl flex justify-center items-center text-white w-full h-12">
+			Weather Forecast
+		</header>
+		<!----------------------- Search Section ----------------------->
+		<section class="w-full my-2 flex flex-col gap-2 justify-center">
+			<form
+				class="w-[90%] mx-auto md:w-[80%] lg:w-1/2 grid md:grid-flow-row md:place-items-center lg:grid-flow-col gap-2">
+				<input
+					type="search"
+					placeholder="Enter City Name..."
+					class="bg-neutral-50 w-full px-4 py-2 rounded-lg shadow-lg focus:outline-none focus:ring-1 focus:ring-indigo-500"
+					id="cityName" />
+				<button
+					id="searchBtn"
+					class="bg-indigo-500 md:w-fit text-white text-opacity-80 px-4 py-2 rounded-lg shadow-lg transition duration-300 hover:bg-indigo-600 hover:text-opacity-100">
+					Search
+				</button>
+				<p class="text-center">OR</p>
+				<button
+					id="currLocBtn"
+					class="border border-neutral-300 md:w-fit px-4 py-2 rounded-lg transition duration-300 hover:bg-indigo-500 hover:text-white">
+					Current Location
+				</button>
+				<select
+					id="recentCityBtn"
+					class="border border-neutral-300 md:w-fit px-4 py-2 rounded-lg transition duration-300 hover:bg-indigo-500 hover:text-white">
+					<option
+						value="Select a city"
+						default>
+						Searched Cities
+					</option>
+				</select>
+			</form>
+		</section>
+
+		<!----------------------- City Weather Section ----------------------->
+		<main class="h-full md:w-3/4 mx-2 md:mx-auto mt-4">
+			<!----------------------- Today's Weather Section ----------------------->
+			<section class="bg-neutral-50 rounded-lg shadow-lg p-4 mb-6">
+				<div class="mb-3">
+					<h2 class="text-2xl font-semibold text-indigo-600">
+						Today's Weather
+					</h2>
+					<p>Mumbai, India</p>
+					<p>3 May, 2002</p>
+				</div>
+
+				<div class="flex items-center justify-between">
+					<div class="flex items-center">
+						<img
+							src="https://cdn2.iconfinder.com/data/icons/weather-flat-14/64/weather02-512.png"
+							alt="Weather Icon"
+							class="w-16 h-16" />
+						<div class="ml-4">
+							<p class="text-3xl font-bold text-gray-800">25°C</p>
+							<p class="text-lg text-gray-500">Sunny</p>
+						</div>
+					</div>
+
+					<div class="flex flex-col text-right text-gray-600">
+						<p><span class="font-semibold">Humidity:</span> 45%</p>
+
+						<p><span class="font-semibold">Wind Speed:</span> 10 km/h</p>
+					</div>
+				</div>
+			</section>
+
+			<!----------------------- Next 5 day's Weather Section ----------------------->
+			<section class="bg-neutral-50 rounded-lg shadow-lg p-4">
+				<h2 class="text-2xl font-semibold mb-4 text-indigo-600">
+					Next 5 Days Forecast
+				</h2>
+				<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+					<div class="bg-indigo-50 p-4 rounded-lg text-center">
+						<p class="text-lg font-semibold text-gray-800">Monday</p>
+						<img
+							src="https://cdn2.iconfinder.com/data/icons/weather-flat-14/64/weather02-512.png"
+							alt="Weather Icon"
+							class="w-12 h-12 mx-auto my-2" />
+						<p class="text-xl font-bold text-gray-800">22°C</p>
+						<p class="text-gray-600 font-semibold">Cloudy</p>
+						<p class="text-sm text-gray-500">Wind: 8 km/h</p>
+						<p class="text-sm text-gray-500">Humidity: 55%</p>
+					</div>
+					<div class="bg-indigo-50 p-4 rounded-lg text-center">
+						<p class="text-lg font-semibold text-gray-800">Monday</p>
+						<img
+							src="https://cdn2.iconfinder.com/data/icons/weather-flat-14/64/weather02-512.png"
+							alt="Weather Icon"
+							class="w-12 h-12 mx-auto my-2" />
+						<p class="text-xl font-bold text-gray-800">22°C</p>
+						<p class="text-gray-600 font-semibold">Cloudy</p>
+						<p class="text-sm text-gray-500">Wind: 8 km/h</p>
+						<p class="text-sm text-gray-500">Humidity: 55%</p>
+					</div>
+					<div class="bg-indigo-50 p-4 rounded-lg text-center">
+						<p class="text-lg font-semibold text-gray-800">Monday</p>
+						<img
+							src="https://cdn2.iconfinder.com/data/icons/weather-flat-14/64/weather02-512.png"
+							alt="Weather Icon"
+							class="w-12 h-12 mx-auto my-2" />
+						<p class="text-xl font-bold text-gray-800">22°C</p>
+						<p class="text-gray-600 font-semibold">Cloudy</p>
+						<p class="text-sm text-gray-500">Wind: 8 km/h</p>
+						<p class="text-sm text-gray-500">Humidity: 55%</p>
+					</div>
+					<div class="bg-indigo-50 p-4 rounded-lg text-center">
+						<p class="text-lg font-semibold text-gray-800">Monday</p>
+						<img
+							src="https://cdn2.iconfinder.com/data/icons/weather-flat-14/64/weather02-512.png"
+							alt="Weather Icon"
+							class="w-12 h-12 mx-auto my-2" />
+						<p class="text-xl font-bold text-gray-800">22°C</p>
+						<p class="text-gray-600 font-semibold">Cloudy</p>
+						<p class="text-sm text-gray-500">Wind: 8 km/h</p>
+						<p class="text-sm text-gray-500">Humidity: 55%</p>
+					</div>
+					<div class="bg-indigo-50 p-4 rounded-lg text-center">
+						<p class="text-lg font-semibold text-gray-800">Monday</p>
+						<img
+							src="https://cdn2.iconfinder.com/data/icons/weather-flat-14/64/weather02-512.png"
+							alt="Weather Icon"
+							class="w-12 h-12 mx-auto my-2" />
+						<p class="text-xl font-bold text-gray-800">22°C</p>
+						<p class="text-gray-600 font-semibold">Cloudy</p>
+						<p class="text-sm text-gray-500">Wind: 8 km/h</p>
+						<p class="text-sm text-gray-500">Humidity: 55%</p>
+					</div>
+				</div>
+			</section>
+		</main>
+
+		<script src="./app.js"></script>
+	</body>
+</html>
