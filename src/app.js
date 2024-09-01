@@ -75,6 +75,23 @@ const getWeather = (lat, lon, name, state) => {
 
 searchBtn.addEventListener("click", getCityCoordinate);
 
+// Load a weather info on page load
+const defaultCityWeather = () => {
+	const defaultCity = "Mumbai";
+	let geoCode = `http://api.openweathermap.org/geo/1.0/direct?q=${defaultCity}&limit=1&appid=${apiKey}`;
+	fetch(geoCode)
+		.then((res) => res.json())
+		.then((data) => {
+			let { lat, lon, name, state } = data[0];
+			getWeather(lat, lon, name, state);
+		})
+		.catch(() => {
+			alert("Failed to fetch weather for default city...");
+		});
+};
+// Call the function to load default city weather when the page loads
+window.addEventListener("load", defaultCityWeather);
+
 // Weather data for Current Location
 const currLocBtn = document.getElementById("currLocBtn");
 // Get weather for current location
