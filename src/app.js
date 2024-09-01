@@ -152,6 +152,7 @@ const getCurrentLocWeather = (e) => {
 			(position) => {
 				const { latitude, longitude } = position.coords;
 				getWeather(latitude, longitude, "Current Location", "");
+				getForecast(latitude, longitude);
 			},
 			(error) => {
 				alert("Failed to get current location...", error);
